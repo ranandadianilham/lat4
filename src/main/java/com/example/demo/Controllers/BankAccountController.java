@@ -1,7 +1,6 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.models.Bank_Account;
-import com.example.demo.models.Note;
 import com.example.demo.payloads.request.BankAccountRequest;
 import com.example.demo.payloads.request.note.EditRequest;
 import com.example.demo.payloads.response.BaseResponse;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +38,7 @@ public class BankAccountController {
         Optional<Bank_Account> note = bankAccountRepository.findById(id);
         return new ResponseEntity<>(new BaseResponse(200, "success", note), HttpStatus.OK);
     }
+
     @PostMapping("/save")
     public ResponseEntity<BaseResponse> save() {
         return null;
