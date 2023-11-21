@@ -1,10 +1,14 @@
 package com.example.demo.models;
+
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 
+@Data
 @Entity
 @Table(name = "training")
+
 public class Training {
 
     @Id

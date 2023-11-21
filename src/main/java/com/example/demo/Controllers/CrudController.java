@@ -7,7 +7,6 @@ import com.example.demo.models.Note;
 import com.example.demo.payloads.request.note.EditRequest;
 import com.example.demo.payloads.response.BaseResponse;
 import com.example.demo.repository.NoteRepository;
-import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

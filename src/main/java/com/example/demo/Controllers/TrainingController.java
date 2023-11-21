@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.models.Employee_Detail;
 import com.example.demo.models.Training;
 import com.example.demo.payloads.request.TrainingRequest;
 import com.example.demo.payloads.response.BaseResponse;
@@ -36,7 +37,6 @@ public class TrainingController {
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponse> getById(@PathVariable Long id) {
         Optional<Training> note = trainingRepository.findById(id);
-        System.out.println(id);
         return new ResponseEntity<>(new BaseResponse(200, "success", note), HttpStatus.OK);
     }
 
@@ -51,7 +51,6 @@ public class TrainingController {
          */
         Training noteObj = trainingRepository.save(temp);
 
-        System.out.println(noteObj);
         return new ResponseEntity<>(new BaseResponse(200, "success", noteObj), HttpStatus.OK);
     }
 
@@ -70,7 +69,8 @@ public class TrainingController {
     private static Training getTraining(TrainingRequest TrainingRequest, Optional<Training> oldNote) {
         Training temp = new Training();
         if (oldNote.isPresent()) {
-
+            temp.setPengajar(TrainingRequest.getPengajar());
+            temp.setTema(TrainingRequest.getTema());
         }
         return temp;
     }

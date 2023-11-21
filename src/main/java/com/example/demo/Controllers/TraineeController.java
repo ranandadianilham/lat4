@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.models.Employee_Detail;
 import com.example.demo.models.Trainee;
 import com.example.demo.payloads.request.TraineeRequest;
-import com.example.demo.payloads.request.note.EditRequest;
 import com.example.demo.payloads.response.BaseResponse;
 import com.example.demo.repository.TraineeRepository;
 import java.util.List;
@@ -40,32 +40,20 @@ public class TraineeController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<BaseResponse> save() {
-        return null;
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<BaseResponse> editById(@PathVariable Long id) {
-        return null;
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<BaseResponse> deleteById(@PathVariable Long id) {
-        return null;
-    }
-
-    @PostMapping("/note")
     public ResponseEntity<BaseResponse> addPost(@RequestBody TraineeRequest bankAccountRequest) {
         Trainee noteObj = traineeRepository.save(bankAccountRequest);
         return new ResponseEntity<>(new BaseResponse(200, "success", noteObj), HttpStatus.OK);
     }
 
-    @PutMapping("/note/{id}")
-    public ResponseEntity<BaseResponse> editPost(@PathVariable Long id, @RequestBody EditRequest editRequest) {
+    @PutMapping("/{id}")
+    public ResponseEntity<BaseResponse> editPost(@PathVariable Long id, @RequestBody TraineeRequest TraineeRequest) {
         try {
             Optional<Trainee> oldNote = traineeRepository.findById(id);
             Trainee updatingNote = new Trainee();
             if (oldNote.isPresent()) {
+                updatingNote.setIdKaryawan(TraineeRequest.getIdKaryawan());
+                updatingNote.setIdTraining(TraineeRequest.getIdTraining());
+                updatingNote.setTanggal(TraineeRequest.getTanggal());
             }
             Trainee noteObj = traineeRepository.save(updatingNote);
             return new ResponseEntity<>(new BaseResponse(200, "success", noteObj), HttpStatus.OK);
@@ -74,8 +62,8 @@ public class TraineeController {
         }
     }
 
-    @DeleteMapping("/note/{id}")
-    public ResponseEntity<BaseResponse> deletePost(@PathVariable Long id, @RequestBody EditRequest editRequest) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BaseResponse> deletePost(@PathVariable Long id, @RequestBody TraineeRequest TraineeRequest) {
         try {
             Optional<Trainee> oldNote = traineeRepository.findById(id);
             Trainee updatingNote = new Trainee();

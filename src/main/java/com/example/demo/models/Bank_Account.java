@@ -34,4 +34,3 @@ public class Bank_Account {
 
     // Getters and Setters
 }
-
