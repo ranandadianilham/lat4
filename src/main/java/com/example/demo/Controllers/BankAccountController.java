@@ -40,27 +40,12 @@ public class BankAccountController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<BaseResponse> save() {
-        return null;
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<BaseResponse> editById(@PathVariable Long id) {
-        return null;
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<BaseResponse> deleteById(@PathVariable Long id) {
-        return null;
-    }
-
-    @PostMapping("/note")
     public ResponseEntity<BaseResponse> addPost(@RequestBody BankAccountRequest bankAccountRequest) {
         Bank_Account noteObj = bankAccountRepository.save(bankAccountRequest);
         return new ResponseEntity<>(new BaseResponse(200, "success", noteObj), HttpStatus.OK);
     }
 
-    @PutMapping("/note/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<BaseResponse> editPost(@PathVariable Long id, @RequestBody EditRequest editRequest) {
         try {
             Optional<Bank_Account> oldNote = bankAccountRepository.findById(id);
@@ -74,7 +59,7 @@ public class BankAccountController {
         }
     }
 
-    @DeleteMapping("/note/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse> deletePost(@PathVariable Long id, @RequestBody EditRequest editRequest) {
         try {
             Optional<Bank_Account> oldNote = bankAccountRepository.findById(id);

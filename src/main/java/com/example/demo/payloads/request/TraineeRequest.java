@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 public class TraineeRequest {
 
     private String tanggal;
-
     private Long idKaryawan;
-
     private Long idTraining;
 }

@@ -43,12 +43,10 @@ public class TrainingController {
     @PostMapping("/save")
     public ResponseEntity<BaseResponse> addPost(@RequestBody TrainingRequest TrainingRequest) {
         Training temp = new Training();
-        /*
-         * temp.setNama(TrainingRequest.getNama());
-         * temp.setDob(TrainingRequest.getDob());
-         * temp.setAlamat(TrainingRequest.getAlamat());
-         * temp.setStatus(TrainingRequest.getStatus());
-         */
+
+        temp.setPengajar(TrainingRequest.getPengajar());
+        temp.setTema(TrainingRequest.getTema());
+
         Training noteObj = trainingRepository.save(temp);
 
         return new ResponseEntity<>(new BaseResponse(200, "success", noteObj), HttpStatus.OK);
