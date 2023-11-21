@@ -55,22 +55,36 @@ public class EmployeeController {
         return new ResponseEntity<>(new BaseResponse(200, "success", noteObj), HttpStatus.OK);
     }
 
-
-    /*@PutMapping("/{id}")
-    public ResponseEntity<BaseResponse> editPost(@PathVariable Long id, @RequestBody EditRequest editRequest) {
+    @PutMapping("/{id}")
+    public ResponseEntity<BaseResponse> editPost(@PathVariable Long id, @RequestBody EmployeeRequest employeeRequest) {
         try {
             Optional<Employee> oldNote = employeeRepository.findById(id);
-            Employee updatingNote = new Employee();
-            if (oldNote.isPresent()) {
-                updatingNote.setTitle(editRequest.getTitle());
-                updatingNote.setBody(editRequest.getBody());
-            }
-            Employee noteObj = employeeRepository.save(updatingNote);
+            Employee temp = getEmployee(employeeRequest, oldNote);
+            Employee noteObj = employeeRepository.save(temp);
             return new ResponseEntity<>(new BaseResponse(200, "success", noteObj), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new BaseResponse(200, "success", null), HttpStatus.OK);
         }
-    }*/
+    }
+
+    private static Employee getEmployee(EmployeeRequest employeeRequest, Optional<Employee> oldNote) {
+        Employee temp = new Employee();
+        if (oldNote.isPresent()) {
+
+            temp.setNama(employeeRequest.getNama());
+            temp.setDob(employeeRequest.getDob());
+            temp.setAlamat(employeeRequest.getAlamat());
+            temp.setStatus(employeeRequest.getStatus());
+
+            Employee_Detail temp1 = new Employee_Detail();
+            temp1.setNpwp(employeeRequest.getDetailKaryawan().getNpwp());
+            temp1.setNik(employeeRequest.getDetailKaryawan().getNpwp());
+
+            temp.setEmployee_Detail(temp1);
+
+        }
+        return temp;
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse> deletePost(@PathVariable Long id) {
