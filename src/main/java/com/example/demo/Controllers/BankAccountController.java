@@ -46,11 +46,15 @@ public class BankAccountController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponse> editPost(@PathVariable Long id, @RequestBody EditRequest editRequest) {
+    public ResponseEntity<BaseResponse> editPost(@PathVariable Long id, @RequestBody BankAccountRequest editRequest) {
         try {
             Optional<Bank_Account> oldNote = bankAccountRepository.findById(id);
             Bank_Account updatingNote = new Bank_Account();
             if (oldNote.isPresent()) {
+                updatingNote.setId(id);
+                updatingNote.setNama(editRequest.getNama());
+                updatingNote.setJenis(editRequest.getJenis());
+                updatingNote.setRekening(editRequest.getRekening());
             }
             Bank_Account noteObj = bankAccountRepository.save(updatingNote);
             return new ResponseEntity<>(new BaseResponse(200, "success", noteObj), HttpStatus.OK);

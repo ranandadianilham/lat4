@@ -57,32 +57,24 @@ public class EmployeeController {
     public ResponseEntity<BaseResponse> editPost(@PathVariable Long id, @RequestBody EmployeeRequest employeeRequest) {
         try {
             Optional<Employee> oldNote = employeeRepository.findById(id);
-            Employee temp = getEmployee(employeeRequest, oldNote);
+            Employee temp = new Employee();
+            if (oldNote.isPresent()) {
+                temp.setId(id);
+                temp.setNama(employeeRequest.getNama());
+                temp.setDob(employeeRequest.getDob());
+                temp.setAlamat(employeeRequest.getAlamat());
+                temp.setStatus(employeeRequest.getStatus());
+                temp.setEmployee_Detail(oldNote.get().getEmployee_Detail());
+
+            }
+            System.out.println(temp);
             Employee noteObj = employeeRepository.save(temp);
             return new ResponseEntity<>(new BaseResponse(200, "success", noteObj), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new BaseResponse(200, "success", null), HttpStatus.OK);
+            return new ResponseEntity<>(new BaseResponse(200, "failed", e.getMessage()), HttpStatus.OK);
         }
     }
 
-    private static Employee getEmployee(EmployeeRequest employeeRequest, Optional<Employee> oldNote) {
-        Employee temp = new Employee();
-        if (oldNote.isPresent()) {
-
-            temp.setNama(employeeRequest.getNama());
-            temp.setDob(employeeRequest.getDob());
-            temp.setAlamat(employeeRequest.getAlamat());
-            temp.setStatus(employeeRequest.getStatus());
-
-            Employee_Detail temp1 = new Employee_Detail();
-            temp1.setNpwp(employeeRequest.getDetailKaryawan().getNpwp());
-            temp1.setNik(employeeRequest.getDetailKaryawan().getNpwp());
-
-            temp.setEmployee_Detail(temp1);
-
-        }
-        return temp;
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse> deletePost(@PathVariable Long id) {
@@ -91,7 +83,7 @@ public class EmployeeController {
             employeeRepository.deleteById(id);
             return new ResponseEntity<>(new BaseResponse(200, "delete success", oldNote), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new BaseResponse(200, "success", null), HttpStatus.OK);
+            return new ResponseEntity<>(new BaseResponse(200, "success", e.getMessage()), HttpStatus.OK);
         }
     }
 }

@@ -1,10 +1,12 @@
 package com.example.demo.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 
 @Entity
+@Data
 @Table(name = "bank_account")
 public class Bank_Account {
 
